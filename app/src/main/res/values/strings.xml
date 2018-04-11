@@ -2,4 +2,7 @@
     <string name="app_name">SensorTester</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
+    <string name="accel_X">X:</string>
+    <string name="accel_Y">Y:</string>
+    <string name="accel_Z">Z:</string>
 </resources>
