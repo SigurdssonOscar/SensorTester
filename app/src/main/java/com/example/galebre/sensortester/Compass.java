@@ -1,6 +1,7 @@
 package com.example.galebre.sensortester;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,21 +11,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Vibrator;
+import android.media.AudioAttributes;
 
 public class Compass extends AppCompatActivity implements SensorEventListener {
 
-    ImageView compass_img;
-    TextView txt_compass;
-    int mAzimuth;
+    private ImageView compass_img;
+    private TextView txt_compass;
+    private int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
-    boolean haveSensor = false, haveSensor2 = false;
-    float[] rMat = new float[9];
-    float[] orientation = new float[3];
+    private boolean haveSensor = false, haveSensor2 = false;
+    private float[] rMat = new float[9];
+    private float[] orientation = new float[3];
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
+    private Vibrator v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         compass_img = (ImageView) findViewById(R.id.img_compass);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         start();
     }
@@ -65,6 +70,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         if (mAzimuth >= 350 || mAzimuth <= 10)
             where = "N";
+            v.vibrate(100);
         if (mAzimuth < 350 && mAzimuth > 280)
             where = "NW";
         if (mAzimuth <= 280 && mAzimuth > 260)
