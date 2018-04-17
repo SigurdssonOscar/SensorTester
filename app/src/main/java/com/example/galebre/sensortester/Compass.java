@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.VibrationEffect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -70,7 +71,6 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         if (mAzimuth >= 350 || mAzimuth <= 10)
             where = "N";
-            v.vibrate(100);
         if (mAzimuth < 350 && mAzimuth > 280)
             where = "NW";
         if (mAzimuth <= 280 && mAzimuth > 260)
@@ -86,6 +86,11 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         if (mAzimuth <= 80 && mAzimuth > 10)
             where = "NE";
 
+        if(where.equals("N")){
+            v.vibrate(100);
+        }else{
+            v.cancel();
+        }
 
         txt_compass.setText(mAzimuth + "° " + where);
     }
